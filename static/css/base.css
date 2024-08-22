@@ -1,0 +1,32 @@
+.nav{
+    background-color: rgba(123,127,267, 0.5);
+    text-align: center;
+}
+
+.nav li{
+    display: inline-block;
+    margin-right: 20px;
+    margin-left: 20px;
+    font-size: 30px;
+    margin-top: 10px;
+    
+}
+
+.nav a:hover{
+    background-color: rgba(44, 58, 98, 0.62);
+    font-size: 30px;
+}
+.nav a {
+    font-size: 30px;
+}
+button{
+    background-color: blue;
+    
+}
+.user{
+    text-align: right;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
+
+

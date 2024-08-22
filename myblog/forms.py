@@ -12,5 +12,9 @@ class LoginForm(AuthenticationForm):
         model = User
         fields = ('username','password')
 
+class BlogForm(forms.ModelForm):
+    class Meta:
+        model = models.Blogs
+        fields = ('author','category','title','text','image1','image2','image3',)
 
 

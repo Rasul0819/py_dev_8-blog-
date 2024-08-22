@@ -5,6 +5,9 @@ from . import forms
 from django.contrib.auth import login,logout
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
+
+from django.contrib.auth.decorators import login_required
+
 def homepage(request):
     bloglar = models.Blogs.objects.all()
     return render(request,'home.html',{'postlar':bloglar})
@@ -41,3 +44,43 @@ def log_out(request):
 def detail(request,id):
     post = get_object_or_404(models.Blogs,id=id)
     return render(request,'detail.html',{'post':post})
+
+
+
+@login_required
+def craete_post(request):
+    if request.method =='POST':
+        form = forms.BlogForm(request.POST,request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = forms.BlogForm()
+    return render(request,'create_post.html',{'form':form})
+
+
+
+@login_required
+def update_post(request,id):
+    blog_post = get_object_or_404(models.Blogs,id=id)
+    if blog_post.author!=request.user:
+        return redirect('home')
+    model = models.Blogs.objects.get(id=id)
+    form = forms.BlogForm(request.POST or None, request.FILES,instance=model)
+    if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render(request,'update_post.html',{'form':form,'model':model})
+
+
+@login_required
+def delete_post(request,id):
+    blog_post = get_object_or_404(models.Blogs,id=id)
+    if blog_post.author!=request.user:
+        return redirect('home')
+    model = models.Blogs.objects.get(id=id)
+    form = forms.BlogForm(request.POST or None, request.FILES,instance=model)
+    if request.method=='POST':
+        model.delete()
+        return redirect('home')
+    return render(request,'delete.html',{'form':form})
