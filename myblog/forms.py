@@ -15,6 +15,6 @@ class LoginForm(AuthenticationForm):
 class BlogForm(forms.ModelForm):
     class Meta:
         model = models.Blogs
-        fields = ('author','category','title','text','image1','image2','image3',)
+        fields = ('category','title','text','image1','image2','image3')
 
 

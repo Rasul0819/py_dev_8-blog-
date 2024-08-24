@@ -2,6 +2,7 @@
 {% block content %}
     {% for blog in  postlar %}
         <h1>{{blog.title}}</h1>
+        <p>{{blog.author}}</p>
         {% if blog.image1 %}
             <p><img src="{{blog.image1.url}}"></p>
         {% else %}

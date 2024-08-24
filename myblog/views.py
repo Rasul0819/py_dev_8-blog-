@@ -52,7 +52,10 @@ def craete_post(request):
     if request.method =='POST':
         form = forms.BlogForm(request.POST,request.FILES)
         if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
             form.save()
+            
             return redirect('home')
     else:
         form = forms.BlogForm()
@@ -66,7 +69,9 @@ def update_post(request,id):
     if blog_post.author!=request.user:
         return redirect('home')
     model = models.Blogs.objects.get(id=id)
-    form = forms.BlogForm(request.POST or None, request.FILES,instance=model)
+    form = forms.BlogForm(request.POST or None, 
+                          request.FILES,
+                          instance=model)
     if form.is_valid():
             form.save()
             return redirect('home')
